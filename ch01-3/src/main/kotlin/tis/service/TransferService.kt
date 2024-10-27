@@ -9,6 +9,11 @@ class TransferService(
 ) {
     fun execute(fromUserId: Long, toUserId: Long, amount: Int) {
         depositService.execute(toUserId, amount)
-        withdrawService.execute(fromUserId, amount)
+        try {
+            withdrawService.execute(fromUserId, amount)
+        } catch (e: Exception) {
+            depositService.execute(fromUserId, amount)
+            throw e
+        }
     }
 }
