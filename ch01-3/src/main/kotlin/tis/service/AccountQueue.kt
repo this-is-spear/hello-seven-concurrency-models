@@ -3,13 +3,13 @@ package tis.service
 import java.util.PriorityQueue
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
-import org.springframework.stereotype.Service
 import tis.domain.AccountingBehavior
 
 private const val BUFFER_SIZE = 5
 
-@Service
-class AccountService {
+class AccountQueue(
+    private val queueId: Long,
+) {
     private val buffer = PriorityQueue<AccountingBehavior>()
     private val lock = ReentrantLock()
     private val notFull: Condition = lock.newCondition()
@@ -19,7 +19,7 @@ class AccountService {
         lock.lock()
         try {
             while (buffer.size == BUFFER_SIZE) {
-                println("Buffer is full, waiting... [$item]")
+                println("Buffer$queueId is full, waiting... [$item]")
                 notFull.await()
             }
 
@@ -35,7 +35,7 @@ class AccountService {
         lock.lock()
         try {
             while (buffer.isEmpty()) {
-                println("Buffer is empty, waiting...")
+                println("Buffer$queueId is empty, waiting...")
                 notEmpty.await()
             }
 

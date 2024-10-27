@@ -7,11 +7,11 @@ import tis.domain.Member
 
 @Service
 class WithdrawService(
-    private val accountService: AccountService,
+    private val accountFacadeService: ProduceService,
 ) {
     fun execute(userId: Long, amount: Int) {
         val member = Member(id = userId)
         val money = Money(amount)
-        accountService.produce(AccountingBehavior.Withdraw(member, money))
+        accountFacadeService.produce(AccountingBehavior.Withdraw(member, money))
     }
 }
