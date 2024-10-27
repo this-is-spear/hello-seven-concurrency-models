@@ -2,8 +2,8 @@ package tis.service
 
 import org.springframework.stereotype.Service
 import tis.domain.AccountingBehavior
-import tis.domain.Money
 import tis.domain.Member
+import tis.domain.Money
 
 @Service
 class TransferService(
@@ -13,7 +13,6 @@ class TransferService(
         val fromMember = Member(id = fromUserId)
         val toMember = Member(id = toUserId)
         val money = Money(amount)
-        accountService.produce(AccountingBehavior.Withdraw(fromMember, money))
-        accountService.produce(AccountingBehavior.Deposit(toMember, money))
+        accountService.produce(AccountingBehavior.Transfer(fromMember, money, toMember))
     }
 }

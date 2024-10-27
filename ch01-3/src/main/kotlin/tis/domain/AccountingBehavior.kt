@@ -9,6 +9,11 @@ sealed class AccountingBehavior(
 ) : Comparable<AccountingBehavior> {
     class Deposit(member: Member, money: Money) : AccountingBehavior(member, money)
     class Withdraw(member: Member, money: Money) : AccountingBehavior(member, money)
+    class Transfer(
+        member: Member,
+        money: Money,
+        val targetMember: Member
+    ) : AccountingBehavior(member, money)
 
     override fun compareTo(other: AccountingBehavior): Int {
         if (this.createdAt.instant() == other.createdAt.instant()) {

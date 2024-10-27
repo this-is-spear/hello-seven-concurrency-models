@@ -20,6 +20,7 @@ class RecordExecutor(
                     when (val behavior = accountService.consume()) {
                         is AccountingBehavior.Withdraw -> recordService.withdraw(behavior)
                         is AccountingBehavior.Deposit -> recordService.deposit(behavior)
+                        is AccountingBehavior.Transfer -> recordService.transfer(behavior)
                     }
                 } catch (e: Exception) {
                     log.error("Error: $e")
