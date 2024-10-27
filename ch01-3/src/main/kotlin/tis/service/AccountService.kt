@@ -9,20 +9,31 @@ import tis.repository.MemberRepository
 @Service
 class AccountService(
     private val memberRepository: MemberRepository,
+    private val transactionService: TransactionService,
 ) {
     @Transactional
     fun withdraw(behavior: AccountingBehavior.Withdraw) {
-        val member = memberRepository.findByIdOrNull(behavior.member.id)
-            ?: throw IllegalArgumentException("No user data")
-        member.account -= behavior.money
-        memberRepository.save(member)
+        try {
+            val member = memberRepository.findByIdOrNull(behavior.member.id)
+                ?: throw IllegalArgumentException("No user data")
+            member.account -= behavior.money
+            memberRepository.save(member)
+            transactionService.complete(behavior.transactionSequence.sequence)
+        } catch (e: Exception) {
+            transactionService.fail(behavior.transactionSequence.sequence)
+        }
     }
 
     @Transactional
     fun deposit(behavior: AccountingBehavior.Deposit) {
-        val member = memberRepository.findByIdOrNull(behavior.member.id)
-            ?: throw IllegalArgumentException("No user data")
-        member.account += behavior.money
-        memberRepository.save(member)
+        try {
+            val member = memberRepository.findByIdOrNull(behavior.member.id)
+                ?: throw IllegalArgumentException("No user data")
+            member.account += behavior.money
+            memberRepository.save(member)
+            transactionService.complete(behavior.transactionSequence.sequence)
+        } catch (e: Exception) {
+            transactionService.fail(behavior.transactionSequence.sequence)
+        }
     }
 }

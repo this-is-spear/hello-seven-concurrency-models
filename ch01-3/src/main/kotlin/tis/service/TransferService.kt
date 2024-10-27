@@ -8,12 +8,11 @@ class TransferService(
     private val withdrawService: WithdrawService,
 ) {
     fun execute(fromUserId: Long, toUserId: Long, amount: Int) {
-        depositService.execute(toUserId, amount)
+        withdrawService.execute(fromUserId, amount)
         try {
-            withdrawService.execute(fromUserId, amount)
+            depositService.execute(toUserId, amount)
         } catch (e: Exception) {
             depositService.execute(fromUserId, amount)
-            throw e
         }
     }
 }
