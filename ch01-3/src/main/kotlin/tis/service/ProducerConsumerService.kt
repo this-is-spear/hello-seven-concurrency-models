@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 import tis.domain.AccountingBehavior
 
 @Service
-class ProduceService {
+class ProducerConsumerService {
     private val map: Map<Long, AccountQueue> = mapOf(
         0L to AccountQueue(0L),
         1L to AccountQueue(1L),

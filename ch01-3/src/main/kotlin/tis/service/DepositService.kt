@@ -7,7 +7,7 @@ import tis.domain.Member
 
 @Service
 class DepositService(
-    private val accountFacadeService: ProduceService,
+    private val accountFacadeService: ProducerConsumerService,
 ) {
     fun execute(userId: Long, amount: Int) {
         val member = Member(id = userId)

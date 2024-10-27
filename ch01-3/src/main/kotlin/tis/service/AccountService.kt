@@ -7,7 +7,7 @@ import tis.domain.AccountingBehavior
 import tis.repository.MemberRepository
 
 @Service
-class ConsumerService(
+class AccountService(
     private val memberRepository: MemberRepository,
 ) {
     @Transactional

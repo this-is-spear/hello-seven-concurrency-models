@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service
 import tis.domain.AccountingBehavior
 
 @Service
-class ConsumerExecutor(
-    private val accountFacadeService: ProduceService,
-    private val consumerService: ConsumerService,
+class AccountExecutor(
+    private val accountFacadeService: ProducerConsumerService,
+    private val accountService: AccountService,
 ) {
-    val log: Logger = LoggerFactory.getLogger(ConsumerExecutor::class.java)
+    val log: Logger = LoggerFactory.getLogger(AccountExecutor::class.java)
 
     init {
         for (i in 0L..2L) {
@@ -19,8 +19,8 @@ class ConsumerExecutor(
                 while (true) {
                     try {
                         when (val behavior = accountFacadeService.consume(i)) {
-                            is AccountingBehavior.Withdraw -> consumerService.withdraw(behavior)
-                            is AccountingBehavior.Deposit -> consumerService.deposit(behavior)
+                            is AccountingBehavior.Withdraw -> accountService.withdraw(behavior)
+                            is AccountingBehavior.Deposit -> accountService.deposit(behavior)
                         }
                     } catch (e: Exception) {
                         log.error("Error: $e")
