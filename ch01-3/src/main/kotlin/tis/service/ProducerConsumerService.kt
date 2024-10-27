@@ -1,6 +1,7 @@
 package tis.service
 
 import org.springframework.stereotype.Service
+import tis.domain.AccountQueue
 import tis.domain.AccountingBehavior
 
 @Service

@@ -1,9 +1,8 @@
-package tis.service
+package tis.domain
 
 import java.util.PriorityQueue
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
-import tis.domain.AccountingBehavior
 
 private const val BUFFER_SIZE = 5
 
