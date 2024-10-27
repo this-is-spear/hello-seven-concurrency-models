@@ -25,16 +25,4 @@ class RecordService(
         member.account += behavior.money
         memberRepository.save(member)
     }
-
-    @Transactional
-    fun transfer(behavior: AccountingBehavior.Transfer) {
-        val member = memberRepository.findByIdOrNull(behavior.member.id)
-            ?: throw IllegalArgumentException("No user data")
-        val targetMember = memberRepository.findByIdOrNull(behavior.member.id)
-            ?: throw IllegalArgumentException("No user data")
-        member.account -= behavior.money
-        targetMember.account += behavior.money
-        memberRepository.save(member)
-        memberRepository.save(targetMember)
-    }
 }
