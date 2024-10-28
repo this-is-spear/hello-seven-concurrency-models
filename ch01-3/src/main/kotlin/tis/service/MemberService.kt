@@ -17,6 +17,6 @@ class MemberService(
 
     fun me(userId: Long): Member {
         return memberRepository.findByIdOrNull(userId)
-            ?: throw IllegalArgumentException("Member not found")
+            ?: throw IllegalArgumentException("No user data")
     }
 }

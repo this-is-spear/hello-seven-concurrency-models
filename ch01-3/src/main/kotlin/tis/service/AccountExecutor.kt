@@ -1,7 +1,5 @@
 package tis.service
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import tis.domain.AccountingBehavior
 import tis.property.AccountQueueProperty
@@ -14,8 +12,6 @@ class AccountExecutor(
     private val transactionService: TransactionService,
     accountQueueProperty: AccountQueueProperty,
 ) {
-    val log: Logger = LoggerFactory.getLogger(AccountExecutor::class.java)
-
     init {
         for (i in 0L..<accountQueueProperty.queueSize) {
             thread {

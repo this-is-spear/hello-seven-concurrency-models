@@ -13,6 +13,7 @@ class TransferService(
             depositService.execute(toUserId, amount)
         } catch (e: Exception) {
             depositService.execute(fromUserId, amount)
+            throw e
         }
     }
 }
