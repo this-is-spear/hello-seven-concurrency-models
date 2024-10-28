@@ -3,14 +3,19 @@ package tis.service
 import org.springframework.stereotype.Service
 import tis.domain.AccountQueue
 import tis.domain.AccountingBehavior
+import tis.property.AccountQueueProperty
 
 @Service
-class ProducerConsumerService {
-    private val map: Map<Long, AccountQueue> = mapOf(
-        0L to AccountQueue(0L),
-        1L to AccountQueue(1L),
-        2L to AccountQueue(2L),
-    )
+class ProducerConsumerService(
+    private val accountQueueProperty: AccountQueueProperty,
+) {
+    val map: Map<Long, AccountQueue> by lazy {
+        val map = mutableMapOf<Long, AccountQueue>()
+        for (i in 0L until accountQueueProperty.queueSize) {
+            map[i] = AccountQueue(i)
+        }
+        map.toMap()
+    }
 
     fun produce(item: AccountingBehavior) {
         val shardingKey = getShardingKey(item.member.id)
