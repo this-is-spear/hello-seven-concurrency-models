@@ -28,6 +28,7 @@ class AccountExecutor(
                         transactionService.complete(behavior.transactionSequence.sequence)
                     } catch (e: Exception) {
                         log.error("Failed to transaction", e)
+                        log.error(e.stackTraceToString())
                         transactionService.fail(behavior.transactionSequence.sequence)
                     }
                 }
