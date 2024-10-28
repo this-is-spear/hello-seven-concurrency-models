@@ -11,7 +11,7 @@ class ProducerConsumerService(
 ) {
     val map: Map<Long, AccountQueue> by lazy {
         val map = mutableMapOf<Long, AccountQueue>()
-        for (i in 0L until accountQueueProperty.queueSize) {
+        for (i in 0L until accountQueueProperty.size) {
             map[i] = AccountQueue(i)
         }
         map.toMap()
