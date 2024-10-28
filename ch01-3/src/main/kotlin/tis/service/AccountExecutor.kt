@@ -16,7 +16,7 @@ class AccountExecutor(
     private val log = LoggerFactory.getLogger(javaClass)
 
     init {
-        for (i in 0L until accountQueueProperty.size) {
+        for (i in accountQueueProperty.range) {
             thread {
                 while (true) {
                     val behavior = accountFacadeService.consume(i)

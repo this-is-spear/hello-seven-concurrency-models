@@ -4,5 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("account-queue")
 class AccountQueueProperty(
-    val size: Long = 3L,
-)
+    private val size: Long = 3L,
+) {
+    val range: LongRange
+        get() = 0L until size
+}
