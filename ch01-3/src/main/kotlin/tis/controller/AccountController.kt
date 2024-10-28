@@ -8,7 +8,7 @@ import tis.service.TransferService
 import tis.service.WithdrawService
 
 @RestController
-class AccountingController(
+class AccountController(
     private val depositService: DepositService,
     private val withdrawService: WithdrawService,
     private val transferService: TransferService,
