@@ -4,7 +4,7 @@ import java.util.PriorityQueue
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
 
-private const val BUFFER_SIZE = 5
+private const val BUFFER_SIZE = 1_000
 
 class AccountQueue(
     private val queueId: Long,
@@ -18,12 +18,10 @@ class AccountQueue(
         lock.lock()
         try {
             while (buffer.size == BUFFER_SIZE) {
-                println("Buffer$queueId is full, waiting... [$item]")
                 notFull.await()
             }
 
             buffer.offer(item)
-            println("Produced: $item")
             notEmpty.signal()
         } finally {
             lock.unlock()
@@ -34,12 +32,10 @@ class AccountQueue(
         lock.lock()
         try {
             while (buffer.isEmpty()) {
-                println("Buffer$queueId is empty, waiting...")
                 notEmpty.await()
             }
 
             val item = buffer.poll()
-            println("Consumed: $item")
             notFull.signal()
             return item
         } finally {

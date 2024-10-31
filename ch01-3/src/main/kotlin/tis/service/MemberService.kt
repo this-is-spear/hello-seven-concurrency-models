@@ -19,4 +19,8 @@ class MemberService(
         return memberRepository.findByIdOrNull(userId)
             ?: throw IllegalArgumentException("No user data")
     }
+
+    fun save(member: Member) {
+        memberRepository.save(member)
+    }
 }
